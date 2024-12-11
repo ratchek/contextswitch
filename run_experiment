@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Output file
+output_file_single="output_single.csv"
+output_file_switch="output_switch.csv"
+
+# Check if the output file exists
+if [ -f "$output_file_single" ]; then
+    echo "Error: Output file '$output_file_single' already exists. Please delete it or choose a different name."
+    exit 1
+fi
+
+# Check if the output file exists
+if [ -f "$output_file_switch" ]; then
+    echo "Error: Output file '$output_file_switch' already exists. Please delete it or choose a different name."
+    exit 1
+fi
+
+# array sizes in kilobytes
+kb_n_sizes=(0 1 2 4 8 16 32 64 128 256)
+
+# array sizes in bytes
+byte_n_sizes=()
+
+# Loop through each element in the original array
+for value in "${kb_n_sizes[@]}"; do
+    # Multiply the element by the constant and add it to the new array
+    byte_n_sizes+=( $((value * 1024)) )
+done
+
+
+# Loop through the values of n
+for n in "${byte_n_sizes[@]}"; do
+    echo "Running measureSingle for n=$n"
+    sudo ./measureSingle -n "$n" >> "$output_file_single"
+    sleep 5
+done
+
+echo "Done with single."
+    
+for n in "${byte_n_sizes[@]}"; do
+    echo "Running measureSwitch for n=$n"
+    sudo ./measureSwitch -n "$n" >> "$output_file_switch"
+    sleep 5
+done
+
+echo "Done."
+
