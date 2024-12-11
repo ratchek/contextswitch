@@ -94,7 +94,8 @@ int main(int argc, char *argv[])
         perror ("create a pipe");
         return -1;
     }
-    printf("time1 without context switch: \t");
+    //printf("time1 without context switch: \t");
+    printf("%lu,", array_size*sizeof(double));
     fflush(stdout);
     /* run N times and get the minimum */
     for(round=0; round< N; round++){
@@ -112,13 +113,14 @@ int main(int argc, char *argv[])
         time1 = time1/LOOP*MILLION;
         if(min1 > time1)
             min1 = time1;
-        printf("%f\t", time1);
+        printf("%f,", time1);
         fflush(stdout);
         memdump(f, array_size*sizeof(double));
         free(f);
         sleep(1);
     }
-    printf("\nmeasureSingle: array_size = %lu, stride = %d, min time1 = %.15f\n", 
-	array_size*sizeof(double), stride*sizeof(double), min1);
+    printf("\n");
+    //printf("\nmeasureSingle: array_size = %lu, stride = %d, min time1 = %.15f\n", 
+	//array_size*sizeof(double), stride*sizeof(double), min1);
     return 0;
 }

@@ -123,7 +123,8 @@ int main(int argc, char *argv[])
     }
     /* communicate between two processes */
     // fork
-    printf("time2 with context swith: \t");
+    //printf("time2 with context swith: \t");
+    printf("%lu,", array_size*sizeof(double));
     fflush(stdout);
     for(round=0; round<N; round++){
 	
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
 	    time1 = time1/(2*LOOP)*MILLION;
             if(min2 > time1)
                 min2 = time1;
-            printf("%f\t", time1);
+            printf("%f,", time1);
             fflush(stdout);
             waitpid(pid, NULL, 0);
             memdump(f, sizeof(double)*array_size);
@@ -167,8 +168,9 @@ int main(int argc, char *argv[])
         }
 	sleep(1);
     }
-    printf("\nmeasureSwitch: array_size = %lu, stride = %d, min time2 = %.15f\n", 
-	array_size*sizeof(double), stride*sizeof(double), min2);
+    printf("\n");
+    //printf("\nmeasureSwitch: array_size = %lu, stride = %d, min time2 = %.15f\n", 
+	//array_size*sizeof(double), stride*sizeof(double), min2);
     return 0;
 }
 
